@@ -4,10 +4,6 @@
     Bold,
     Italic,
     Strikethrough,
-    AlignLeft,
-    AlignCenter,
-    AlignRight,
-    Underline,
     Code,
     Link
   } from 'lucide-svelte';
@@ -15,9 +11,6 @@
   import {writable} from 'svelte/store';
 
   import {cn} from '$lib/helpers';
-  import {getRootNode} from '@nextlint/core';
-
-  import DropdownMenu from './DropdownMenu.svelte';
   import {useEditor} from '$lib/context';
   import LinkButtonProps from '$lib/plugins/link/LinkButtonProps.svelte';
   import {melt} from '@melt-ui/svelte';
@@ -25,8 +18,6 @@
   const editor = useEditor();
 
   const fontValues = writable<Set<string>>(new Set());
-
-  const alignValues = writable<string>('');
 
   const IGNORE_BLOCK_MENU = [
     'figure',
@@ -69,19 +60,8 @@
     fontValues.set(new Set(values));
   };
 
-  const collectAlignValues = () => {
-    let align = '';
-    const rootNode = getRootNode($editor);
-    if (rootNode) {
-      const {node} = rootNode;
-      align = node.attrs.align;
-    }
-    alignValues.set(align);
-  };
-
   const updateBubbleState = () => {
     collectFontValues();
-    collectAlignValues();
   };
 
   onMount(() => {
@@ -123,15 +103,6 @@
       </button>
       <button
         class={cn('item')}
-        data-state={$fontValues.has('Underline') ? 'on' : 'off'}
-        on:mousedown={() => {
-          $editor.chain().focus().toggleUnderline().run();
-        }}
-      >
-        <Underline size={20} />
-      </button>
-      <button
-        class={cn('item')}
         data-state={$fontValues.has('Strike') ? 'on' : 'off'}
         on:mousedown={() => {
           $editor.chain().focus().toggleStrike().run();
@@ -158,38 +129,6 @@
         </button>
       </LinkButtonProps>
     </div>
-    <div class="separator" />
-    <div class="flex items-center gap-1">
-      <button
-        class={cn('item')}
-        data-state={$alignValues === 'left' ? 'on' : 'off'}
-        on:mousedown={() => $editor.chain().focus().setTextAlign('left').run()}
-      >
-        <AlignLeft size={20} />
-      </button>
-      <button
-        class={cn('item')}
-        data-state={$alignValues === 'center' ? 'on' : 'off'}
-        on:mousedown={() => {
-          $editor.chain().focus().setTextAlign('center').run();
-        }}
-      >
-        <AlignCenter size={20} />
-      </button>
-      <button
-        class={cn('item')}
-        data-state={$alignValues === 'right' ? 'on' : 'off'}
-        on:mousedown={() => {
-          $editor.chain().focus().setTextAlign('right').run();
-        }}
-      >
-        <AlignRight size={20} />
-      </button>
-    </div>
-    <div class="separator" />
-    {#if visibleNode}
-      <DropdownMenu {visibleNode} />
-    {/if}
   </div>
 {/if}
 
