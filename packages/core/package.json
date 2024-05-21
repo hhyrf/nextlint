@@ -45,6 +45,7 @@
     "@tiptap/extension-paragraph": "^2.1.13",
     "@tiptap/extension-placeholder": "2.1.13",
     "@tiptap/extension-strike": "^2.1.13",
+    "@tiptap/extension-superscript": "^2.4.0",
     "@tiptap/extension-text": "^2.1.13",
     "@tiptap/extension-underline": "2.1.13",
     "@tiptap/html": "2.1.13",

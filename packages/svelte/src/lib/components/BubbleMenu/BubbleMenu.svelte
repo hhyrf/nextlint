@@ -5,7 +5,8 @@
     Italic,
     Strikethrough,
     Code,
-    Link
+    Link,
+    Superscript
   } from 'lucide-svelte';
   import {onDestroy, onMount} from 'svelte';
   import {writable} from 'svelte/store';
@@ -54,7 +55,8 @@
       $editor.isActive('strike') && 'Strike',
       $editor.isActive('code') && 'Code',
       $editor.isActive('link') && 'Link',
-      $editor.isActive('highlight') && 'Highlight'
+      $editor.isActive('highlight') && 'Highlight',
+      $editor.isActive('superscript') && 'Superscript',
     ].filter(Boolean) as Array<string>;
 
     fontValues.set(new Set(values));
@@ -109,6 +111,15 @@
         }}
       >
         <Strikethrough size={20} />
+      </button>
+      <button
+        class={cn('item')}
+        data-state={$fontValues.has('Superscript') ? 'on' : 'off'}
+        on:mousedown={() => {
+          $editor.chain().focus().toggleSuperscript().run();
+        }}
+      >
+        <Superscript size={20} />
       </button>
       <button
         class={cn('item')}

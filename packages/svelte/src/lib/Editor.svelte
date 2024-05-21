@@ -33,6 +33,8 @@
   import BubbleMenu from './components/BubbleMenu/BubbleMenu.svelte';
   import {BubbleMenuExtension} from './plugins/bubbleMenu/bubbleMenu';
 
+  import {SuperscriptExtension} from './plugins/superscript';
+
   useProsemirrorAdapterProvider();
   export let content: Content;
   export let placeholder = '';
@@ -65,7 +67,8 @@
       BubbleMenuExtension.configure({
         component: BubbleMenu
       }),
-      plugins.ask && PluginAsk.configure(plugins.ask)
+      plugins.ask && PluginAsk.configure(plugins.ask),
+      SuperscriptExtension
     ]
       .concat(extensions)
       .filter(Boolean)
