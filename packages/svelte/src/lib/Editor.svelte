@@ -23,7 +23,6 @@
     type ImagePluginOptions
   } from '$lib/plugins/image';
   import {HighlightExtension} from '$lib/plugins/highlight';
-  import {SlashMenu} from '$lib/plugins/slash';
 
   import {
     Dropcursor,
@@ -36,7 +35,7 @@
 
   useProsemirrorAdapterProvider();
   export let content: Content;
-  export let placeholder = "Press 'space' GPT support, type '/' for help";
+  export let placeholder = '';
   export let onChange: (editor: Editor) => void;
   export let onCreated = (_editor: Editor) => {};
   export let plugins: PluginOptions = {};
@@ -47,17 +46,10 @@
     onCreated,
     onChange,
     placeholder,
-    starterKit: {
-      placeholder: {
-        placeholder,
-        emptyNodeClass: 'is-block-empty'
-      }
-    },
     //@ts-ignore
     extensions: [
       LinkExtension,
       HighlightExtension,
-      SlashMenu,
       FigureExtension,
       SelectImageExtension.configure(plugins.image),
       Dropcursor.configure(plugins.dropCursor),
