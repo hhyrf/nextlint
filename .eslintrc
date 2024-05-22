@@ -6,7 +6,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["import", "svelte3", "@typescript-eslint"],
+  "plugins": ["import", "svelte", "@typescript-eslint"],
   "settings": {
     "import/resolver": {
       "node": {

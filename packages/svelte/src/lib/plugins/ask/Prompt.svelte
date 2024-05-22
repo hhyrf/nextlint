@@ -2,7 +2,7 @@
 
 <script lang="ts">
   import {lockscroll, createLockScrollStore} from '@svelte-put/lockscroll';
-  import {Cross1} from 'radix-icons-svelte';
+  import { X } from 'lucide-svelte';
   import {getContext, onDestroy, onMount} from 'svelte';
   import type {GPTOptions} from './plugin-gpt';
 
@@ -128,6 +128,6 @@
     }}
     class="absolute -top-2 -right-2 rounded-full p-1 bg-background border border-border"
   >
-    <Cross1 />
+    <X />
   </button>
 </div>
