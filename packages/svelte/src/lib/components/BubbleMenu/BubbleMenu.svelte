@@ -6,7 +6,14 @@
     Strikethrough,
     Code,
     Link,
-    Superscript
+    Superscript,
+    Heading1,
+    Heading2,
+    Heading3,
+    List,
+    ListOrdered,
+    SquareCode,
+    Quote
   } from 'lucide-svelte';
   import {onDestroy, onMount} from 'svelte';
   import {writable} from 'svelte/store';
@@ -57,6 +64,13 @@
       $editor.isActive('link') && 'Link',
       $editor.isActive('highlight') && 'Highlight',
       $editor.isActive('superscript') && 'Superscript',
+      $editor.isActive('heading', {level: 1}) && 'Heading',
+      $editor.isActive('heading', {level: 2}) && 'Heading2',
+      $editor.isActive('heading', {level: 3}) && 'Heading3',
+      $editor.isActive('bulletList') && 'BulletList',
+      $editor.isActive('orderedList') && 'OrderedList',
+      $editor.isActive('codeBlock') && 'CodeBlock',
+      $editor.isActive('blockquote') && 'Blockquote',
     ].filter(Boolean) as Array<string>;
 
     fontValues.set(new Set(values));
@@ -81,13 +95,13 @@
 {#if visibleNode}
   <div
     class={cn(`border border-border
-    flex min-w-max items-center gap-4 rounded-md bg-background text-foreground
+    flex flex-col min-w-max items-center gap-1 rounded-md bg-background text-foreground
     px-2 py-1 shadow-md`)}
   >
     <div class="flex items-center gap-1">
       <button
         class="item"
-        data-state={$fontValues.has('Bold') ? 'on' : 'off'}
+        class:active={$fontValues.has('Bold')}
         on:click={() => {
           $editor.chain().focus().toggleBold().run();
         }}
@@ -96,7 +110,7 @@
       </button>
       <button
         class={cn('item')}
-        data-state={$fontValues.has('Italic') ? 'on' : 'off'}
+        class:active={$fontValues.has('Italic')}
         on:mousedown={() => {
           $editor.chain().focus().toggleItalic().run();
         }}
@@ -105,7 +119,7 @@
       </button>
       <button
         class={cn('item')}
-        data-state={$fontValues.has('Strike') ? 'on' : 'off'}
+        class:active={$fontValues.has('Strike')}
         on:mousedown={() => {
           $editor.chain().focus().toggleStrike().run();
         }}
@@ -114,7 +128,7 @@
       </button>
       <button
         class={cn('item')}
-        data-state={$fontValues.has('Superscript') ? 'on' : 'off'}
+        class:active={$fontValues.has('Superscript')}
         on:mousedown={() => {
           $editor.chain().focus().toggleSuperscript().run();
         }}
@@ -123,22 +137,90 @@
       </button>
       <button
         class={cn('item')}
-        data-state={$fontValues.has('Code') ? 'on' : 'off'}
+        class:active={$fontValues.has('Heading')}
+        on:mousedown={() => {
+          $editor.chain().focus().toggleHeading({level: 1}).run();
+        }}
+      >
+        <Heading1 size={20} />
+      </button>
+      <button
+        class={cn('item')}
+        class:active={$fontValues.has('Heading2')}
+        on:mousedown={() => {
+          $editor.chain().focus().toggleHeading({level: 2}).run();
+        }}
+      >
+        <Heading2 size={20} />
+      </button>
+      <button
+        class={cn('item')}
+        class:active={$fontValues.has('Heading3')}
+        on:mousedown={() => {
+          $editor.chain().focus().toggleHeading({level: 3}).run();
+        }}
+      >
+        <Heading3 size={20} />
+      </button>
+    </div>
+    <div class="flex items-center gap-1">
+      <LinkButtonProps let:trigger let:link>
+        <button
+          use:melt={trigger}
+          class={cn('item')}
+          class:active={link ? true : false}
+        >
+          <Link size={20} />
+        </button>
+      </LinkButtonProps>
+      <button
+        class={cn('item')}
+        class:active={$fontValues.has('BulletList')}
+        on:mousedown={() => {
+          $editor.chain().focus().toggleBulletList().run();
+        }}
+      >
+        <List size={20} />
+      </button>
+      <button
+        class={cn('item')}
+        class:active={$fontValues.has('OrderedList')}
+        on:mousedown={() => {
+          $editor.chain().focus().toggleOrderedList().run();
+        }}
+      >
+        <ListOrdered size={20} />
+      </button>
+
+      <div class="separator" />
+      
+      <button
+        class={cn('item')}
+        class:active={$fontValues.has('Blockquote')}
+        on:mousedown={() => {
+          $editor.chain().focus().toggleBlockquote().run();
+        }}
+      >
+        <Quote size={20} />
+      </button>
+      <button
+        class={cn('item')}
+        class:active={$fontValues.has('Code')}
         on:mousedown={() => {
           $editor.chain().focus().toggleCode().run();
         }}
       >
         <Code size={20} />
       </button>
-      <LinkButtonProps let:trigger let:link>
-        <button
-          use:melt={trigger}
-          class={cn('item')}
-          data-state={link ? 'on' : 'off'}
-        >
-          <Link size={20} />
-        </button>
-      </LinkButtonProps>
+      <button
+        class={cn('item')}
+        class:active={$fontValues.has('CodeBlock')}
+        on:mousedown={() => {
+          $editor.chain().focus().toggleCodeBlock().run();
+        }}
+      >
+        <SquareCode size={20} />
+      </button>
     </div>
   </div>
 {/if}
@@ -152,7 +234,7 @@
       background-color: theme('colors.secondary.DEFAULT');
     }
 
-    &[data-state='on'] {
+    &.active {
       background-color: theme('colors.slate.300');
       color: theme('colors.slate.900');
     }
