@@ -1,7 +1,5 @@
 <script lang="ts" context="module">
   export type PluginOptions = {
-    image?: ImagePluginOptions;
-    ask?: AskOptions;
     dropCursor?: DropcursorOptions;
     codeBlock?: NextlintCodeBlockOptions;
   };
@@ -16,12 +14,6 @@
     NextlintCodeBlock,
     type NextlintCodeBlockOptions
   } from '$lib/plugins/codeBlock';
-  import {PluginAsk, type AskOptions} from '$lib/plugins/ask';
-  import {FigureExtension} from '$lib/plugins/figure';
-  import {
-    SelectImageExtension,
-    type ImagePluginOptions
-  } from '$lib/plugins/image';
   import {HighlightExtension} from '$lib/plugins/highlight';
 
   import {
@@ -55,8 +47,6 @@
     extensions: [
       LinkExtension,
       HighlightExtension,
-      FigureExtension,
-      SelectImageExtension.configure(plugins.image),
       Dropcursor.configure(plugins.dropCursor),
       NextlintCodeBlock.configure(
         plugins.codeBlock || {
@@ -70,7 +60,6 @@
       BubbleMenuExtension.configure({
         component: BubbleMenu
       }),
-      plugins.ask && PluginAsk.configure(plugins.ask),
       SuperscriptExtension,
       FloatingMenuExtension.configure({
         component:FloatingMenu

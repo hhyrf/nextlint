@@ -28,9 +28,7 @@
   const fontValues = writable<Set<string>>(new Set());
 
   const IGNORE_BLOCK_MENU = [
-    'figure',
     'NextlintCodeBlock',
-    'selectImage',
     'doc'
   ];
 
