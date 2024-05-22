@@ -28,8 +28,6 @@ import {
   Placeholder,
   type PlaceholderOptions
 } from '@tiptap/extension-placeholder';
-import {Superscript, type SuperscriptExtensionOptions} from '@tiptap/extension-superscript';
-
 import {CommonExtension} from '../plugins/common';
 
 import {nodeIdDecorator} from '../utils';
@@ -53,7 +51,6 @@ export interface StarterKitOptions {
   strike: Partial<StrikeOptions> | false;
   underline: Partial<UnderlineOptions> | false;
   placeholder: Partial<PlaceholderOptions> | false;
-  superscript: Partial<SuperscriptExtensionOptions> | false;
 }
 
 export const StarterKit = Extension.create<StarterKitOptions>({
@@ -124,10 +121,6 @@ export const StarterKit = Extension.create<StarterKitOptions>({
     }
     if (this.options.underline !== false) {
       extensions.push(Underline.configure(this.options.underline));
-    }
-
-    if (this.options.superscript !== false) {
-      extensions.push(Superscript.configure(this.options?.superscript));
     }
 
     extensions.forEach(ext => {

@@ -47,6 +47,7 @@
     "@tiptap/extension-floating-menu": "^2.4.0",
     "@tiptap/extension-link": "^2.4.0",
     "@tiptap/extension-paragraph": "^2.4.0",
+    "@tiptap/extension-superscript": "^2.4.0",
     "@tiptap/pm": "^2.4.0",
     "@tiptap/suggestion": "^2.4.0",
     "clsx": "^2.1.1",

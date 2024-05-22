@@ -22,8 +22,7 @@
   import FloatingMenu from './components/floatingMenu/floatingMenu.svelte';
   import {FloatingMenuExtension} from './plugins/floatingMenu/index';
   import {CodeBlock} from '@tiptap/extension-code-block';
-
-  import {SuperscriptExtension} from './plugins/superscript';
+  import {Superscript} from '@tiptap/extension-superscript';
 
   useProsemirrorAdapterProvider();
   export let content: Content;
@@ -48,7 +47,7 @@
       BubbleMenuExtension.configure({
         component: BubbleMenu
       }),
-      SuperscriptExtension,
+      Superscript,
       FloatingMenuExtension.configure({
         component:FloatingMenu
       })
