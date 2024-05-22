@@ -9,7 +9,7 @@
 
 <script lang="ts">
   import {createEditorContext} from '$lib/context';
-  import type {Content, Editor, Extensions} from '@tiptap/core';
+  import {type Editor, type Content, type Extensions} from '@tiptap/core';
 
   import {LinkExtension} from '$lib/plugins/link';
   import {
@@ -32,6 +32,8 @@
 
   import BubbleMenu from './components/BubbleMenu/BubbleMenu.svelte';
   import {BubbleMenuExtension} from './plugins/bubbleMenu/bubbleMenu';
+  import FloatingMenu from './components/floatingMenu/floatingMenu.svelte';
+  import {FloatingMenuExtension} from './plugins/floatingMenu/index';
 
   import {SuperscriptExtension} from './plugins/superscript';
 
@@ -42,6 +44,7 @@
   export let onCreated = (_editor: Editor) => {};
   export let plugins: PluginOptions = {};
   export let extensions: Extensions = [];
+
   const {render} = createEditorContext({
     editable: true,
     content,
@@ -68,7 +71,10 @@
         component: BubbleMenu
       }),
       plugins.ask && PluginAsk.configure(plugins.ask),
-      SuperscriptExtension
+      SuperscriptExtension,
+      FloatingMenuExtension.configure({
+        component:FloatingMenu
+      })
     ]
       .concat(extensions)
       .filter(Boolean)
