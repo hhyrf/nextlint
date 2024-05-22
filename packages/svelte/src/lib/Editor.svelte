@@ -1,7 +1,6 @@
 <script lang="ts" context="module">
   export type PluginOptions = {
     dropCursor?: DropcursorOptions;
-    codeBlock?: NextlintCodeBlockOptions;
   };
 </script>
 
@@ -10,10 +9,6 @@
   import {type Editor, type Content, type Extensions} from '@tiptap/core';
 
   import {LinkExtension} from '$lib/plugins/link';
-  import {
-    NextlintCodeBlock,
-    type NextlintCodeBlockOptions
-  } from '$lib/plugins/codeBlock';
   import {HighlightExtension} from '$lib/plugins/highlight';
 
   import {
@@ -26,6 +21,7 @@
   import {BubbleMenuExtension} from './plugins/bubbleMenu/bubbleMenu';
   import FloatingMenu from './components/floatingMenu/floatingMenu.svelte';
   import {FloatingMenuExtension} from './plugins/floatingMenu/index';
+  import {CodeBlock} from '@tiptap/extension-code-block';
 
   import {SuperscriptExtension} from './plugins/superscript';
 
@@ -48,15 +44,7 @@
       LinkExtension,
       HighlightExtension,
       Dropcursor.configure(plugins.dropCursor),
-      NextlintCodeBlock.configure(
-        plugins.codeBlock || {
-          themes: {
-            dark: 'github-dark',
-            light: 'github-light'
-          },
-          langs: []
-        }
-      ),
+      CodeBlock,
       BubbleMenuExtension.configure({
         component: BubbleMenu
       }),
