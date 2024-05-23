@@ -56,7 +56,6 @@
     "radash": "^12.1.0",
     "tailwind-merge": "^2.3.0",
     "tailwind-variants": "^0.2.1",
-    "unsplash-js": "^7.0.19",
     "zeed-dom": "^0.13.3"
   },
   "devDependencies": {
